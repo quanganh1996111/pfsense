@@ -88,3 +88,71 @@ Tại Search term nhập `openvpn` > Chọn `Search`. Sau khi có kết quả, c
 
 <img src="https://imgur.com/EqqWNMg.png">
 
+- Cài đặt thành công:
+
+<img src="https://imgur.com/FWL9ez5.png">
+
+## Phần 4. Thiết lập OPENVPN
+
+#### Bước 1: Chọn `VPN > OpenVPN`
+
+<img src="https://imgur.com/UCDb7EB.png">
+
+<img src="https://imgur.com/ipzhE9w.png">
+
+#### Bước 2: Tạo mới server OpenVPN
+
+Chọn Server
+
+- Tại mục `General Information`:
+
+    - `Server mode > Remote Access ( SSL/TLS + User Auth )`
+
+    - `Protocol > UDP IPv4 and IPv6 on all interfaces (multihome)`
+
+    - `Device mode > tap - Layer 2 Tap Mode`
+
+    - `Local port: 1194`
+
+<img src="https://imgur.com/joyzjgA.png">
+
+- Tại mục Cryptographic Settings
+
+    - Chọn `TLS Configuration > Use a TLS Key`
+
+    - Chọn `TLS Configuration > Automatically generate a TLS Key`
+
+    - Chọn `Peer Certificate Authority > anhtqlab` **LƯU Ý**: ĐÂY LÀ CERT TẠO TỪ PHẦN 1
+
+    - Chọn `Server certificate > ca-server` **LƯU Ý**: ĐÂY LÀ CERT TẠO TỪ PHẦN 1
+
+    - Chọn `Data Encryption Algorithms > AES-256-CBC (256 bit key, 128 bit block)` 
+
+    - Chọn `Enable NCP > Enable Negotiable Cryptographic Parameters`
+
+    - Tại `Fallback Data Encryption Algorithm - Chọn AES-256-CBC (256bit key, 128 bit block)`
+
+<img src="https://imgur.com/HfUTW5S.png">
+
+<img src="https://imgur.com/mJiCgKV.png">
+
+- Tại Tunner Settings
+
+    - Chọn `Bridge DHCP: Allow client on the bridge to obtain DHCP`
+
+    - `Bridge Interface: LAN`
+
+    - `Server Bridge DHCP Start: 10.10.40.10`
+    
+    - `Server Bridge DHCP End: 10.10.40.100`
+
+<img src="https://imgur.com/DQmA7BQ.png">
+
+- `Custom Options` thêm cấu hình: `push "route 10.10.40.0 255.255.255.0"`
+
+<img src="https://imgur.com/9vXGOcE.png">
+
+##### Kết quả sau khi cấu hình
+
+<img src="https://imgur.com/hCoDUDo.png">
+
