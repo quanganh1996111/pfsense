@@ -156,3 +156,176 @@ Chọn Server
 
 <img src="https://imgur.com/hCoDUDo.png">
 
+## Phần 5. Cấu hình Interface
+
+### Cấu hình Interface VPN
+
+#### Bước 1: Chọn `Interfaces > Assignments`
+
+<img src="https://imgur.com/qUrCOjT.png">
+
+#### Bước 2: Tại `Available network ports` > Chọn `ovpns1 ()` > Chọn `Add`
+
+<img src="https://imgur.com/owZCJT8.png">
+
+#### Bước 3: Chỉnh sửa `OPT1`
+
+<img src="https://imgur.com/CTuNiwz.png">
+
+- Tại General Configuration:
+
+    - Chọn `Enable > Enable interface`
+
+    - Sửa `Description: vpn`
+
+<img src="https://imgur.com/UBi2xJY.png">
+
+<img src="https://imgur.com/2Yu1oHw.png">
+
+### Cấu hình Bridge VPN
+
+#### Bước 1: Chọn Interfaces > Assignments
+
+<img src="https://imgur.com/jhtRI1z.png">
+
+<img src="https://imgur.com/x2JYmfe.png">
+
+- Tại `Member Interfaces`: chọn `LAN` và `VPN`
+
+<img src="https://imgur.com/iW5YvAh.png">
+
+<img src="https://imgur.com/rbBnppJ.png">
+
+## Phần 6. Cấu hình Firewall Rule
+
+### Cấu hình Rule cho WAN
+
+#### Bước 1: Chọn `Firewall > Rules`
+
+<img src="https://imgur.com/plQZTvG.png">
+
+#### Bước 2: Chọn `WAN` > Chọn `Add`
+
+<img src="https://imgur.com/2VTjf4D.png">
+
+#### Bước 3: Tạo mới rule cho WAN
+
+- Tại `Edit firewall Rule`, điền thông tin như sau:
+
+    - `Action > Pass`
+
+    - `Interface > WAN`
+
+    - `Address Family > IPv4`
+    
+    - `Protocol > UDP`
+
+<img src="https://imgur.com/afRCcYL.png">
+
+- Tại `Destination`:
+
+    - `Destination > WAN ADDRESS`
+
+    - `Destination Port Range > From OpenVPN (1194) to (OpenVPN 1194)`
+
+<img src="https://imgur.com/hrITTDB.png">
+
+- `Apply Changes` để lưu cấu hình:
+
+<img src="https://imgur.com/sGVmD08.png">
+
+### Cấu hình Rule cho LAN
+
+#### Bước 1: Chọn `LAN > ADD`
+
+<img src="https://imgur.com/ldjPImo.png">
+
+#### Bước 2: Tạo mới rule cho LAN
+
+- Tại `Edit firewall Rule`, điền thông tin như sau
+
+    - `Action > Pass`
+
+    - `Interface > LAN`
+    
+    - `Address Family > IPv4`
+    
+    - `Protocol > Any`
+
+<img src="https://imgur.com/a1UCTbZ.png">
+
+<img src="https://imgur.com/en5jpDb.png">
+
+### Cấu hình Rule cho VPN
+
+#### Bước 1: Chọn `VPN > ADD`
+
+<img src="https://imgur.com/DFGCbBG.png">
+
+#### Bước 2: Tạo mới rule cho VPN
+
+- Tại `Edit firewall Rule`, điền thông tin như sau
+
+    - `Action > Pass`
+    
+    - `Interface > VPN`
+
+    - `Address Family > IPv4`
+
+    - `Protocol > Any`
+
+<img src="https://imgur.com/vSbwKj3.png">
+
+<img src="https://imgur.com/s9cJRxx.png">
+
+## Phần 7. Lấy file VPN Client
+
+#### Bước 1: Chọn `VPN > OpenVPN`
+
+<img src="https://imgur.com/aq1xqNA.png">
+
+<img src="https://imgur.com/RwV9MoU.png">
+
+- Download `Bundled Configurations` cho user `anhtq`:
+
+<img src="https://imgur.com/Lztrg3k.png">
+
+## Phần 8. Cấu hình OPENVPN để kết nối
+
+- Tạo Tap Network để kết nối:
+
+<img src="https://imgur.com/hWyaWf9.png">
+
+- Cấu hình lại file `config`:
+
+```
+dev tap
+dev-node VPN-ANHTQ
+nobind
+redirect-gateway def1
+persist-tun
+persist-key
+#data-ciphers AES-256-GCM:AES-256-CBC
+#data-ciphers-fallback AES-256-CBC
+auth SHA256
+tls-client
+client
+resolv-retry infinite
+remote 172.16.2.48 1194 udp
+verify-x509-name "nhanhoa.com" name
+auth-user-pass
+pkcs12 pfSense-udp-1194-anhtq.p12
+tls-auth pfSense-udp-1194-anhtq-tls.key 1
+remote-cert-tls server
+explicit-exit-notify
+```
+
+- Truy cập vào VPN với tài khoản `anhtq` đã tạo trước đó:
+
+<img src="https://imgur.com/VpktQXT.png">
+
+- Kết quả:
+
+<img src="https://imgur.com/6OsCZ2b.png">
+
+<img src="https://imgur.com/a1uNTVK.png">
