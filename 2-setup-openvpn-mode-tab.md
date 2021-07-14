@@ -74,6 +74,10 @@ Nhập thông tin tài khoản tại `Username / Password`
 
 Chọn `Certificate - Click to create a user certificate`
 
+<img src="https://imgur.com/qavaUCs.png">
+
+<img src="https://imgur.com/BP4y8IO.png">
+
 ## Phần 3. Cài gói Openvpn export client
 
 #### Bước 1: Chọn `System > Package Manager`
