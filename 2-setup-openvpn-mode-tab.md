@@ -112,13 +112,15 @@ Chọn Server
 
     - `Server mode > Remote Access ( SSL/TLS + User Auth )`
 
-    - `Protocol > UDP IPv4 and IPv6 on all interfaces (multihome)`
+    - `Protocol > UDP on IPV4 only`
 
     - `Device mode > tap - Layer 2 Tap Mode`
 
     - `Local port: 1194`
 
-<img src="https://imgur.com/joyzjgA.png">
+    - `Interface: WAN` -> Để kết nối từ mạng bên ngoài có thể kết nối được thông qua Internet
+
+<img src="https://imgur.com/ef4ykzE.png">
 
 - Tại mục Cryptographic Settings
 
