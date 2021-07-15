@@ -300,15 +300,14 @@ Chọn Server
 
 - Tạo Tap Network để kết nối:
 
-<img src="https://imgur.com/hWyaWf9.png">
+<img src="https://imgur.com/9IpLAZo.png">
 
 - Cấu hình lại file `config`:
 
 ```
 dev tap
-dev-node VPN-ANHTQ
+dev-node ANHTQ-VLAN40
 nobind
-redirect-gateway def1
 persist-tun
 persist-key
 #data-ciphers AES-256-GCM:AES-256-CBC
@@ -318,12 +317,14 @@ tls-client
 client
 resolv-retry infinite
 remote 172.16.2.48 1194 udp
-verify-x509-name "nhanhoa.com" name
+verify-x509-name "NH" name
 auth-user-pass
-pkcs12 pfSense-udp-1194-anhtq.p12
-tls-auth pfSense-udp-1194-anhtq-tls.key 1
+pkcs12 anhtq-pfSense01-udp-1194-anhtq.p12
+tls-auth anhtq-pfSense01-udp-1194-anhtq-tls.key 1
 remote-cert-tls server
 explicit-exit-notify
+redirect-gateway def1
+
 ```
 
 - Truy cập vào VPN với tài khoản `anhtq` đã tạo trước đó:
@@ -335,3 +336,7 @@ explicit-exit-notify
 <img src="https://imgur.com/6OsCZ2b.png">
 
 <img src="https://imgur.com/a1uNTVK.png">
+
+    - Ping thành công:
+
+<img src="https://imgur.com/eqdpCZP.png">
