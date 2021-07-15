@@ -157,3 +157,109 @@ Kiểm tra trên Node 2 HA-pfSense-02:
 <img src="https://imgur.com/yoLD7Gf.png">
 
 <img src="https://imgur.com/XTJfco9.png">
+
+## Phần 3. Cấu hình VIP trên 2 Node PFSENSE
+
+**Thực hiện trên node1 HA-pfSense-01**
+
+### Bước 1: Cấu hình VIP cho đường WAN
+
+Chọn `Firewall` > `Virtual IPs`
+
+<img src="https://imgur.com/DyowDOr.png">
+
+<img src="https://imgur.com/hGSHIuD.png">
+
+- Tại màn tạo với VIP:
+
+    - `Type`: `CARP`
+
+    - `Interface`: `WAN`
+
+    - `Addresses`: 172.16.2.30 /20
+    
+    - `VHID Group`: 65
+
+    - `Description`: VIP Public
+
+<img src="https://imgur.com/rRhstvz.png">
+
+<img src="https://imgur.com/Y7slNy2.png">
+
+**Lưu ý:** Chỉ cấu hình trên HA-pfSense-01, config sẽ được đồng bộ sang HA-pfSense-02
+
+- Kiểm tra trên Node Backup HA-pfSense-02:
+
+<img src="https://imgur.com/MT3K2lJ.png">
+
+<img src="https://imgur.com/Dh67WH4.png">
+
+### Bước 2: Cấu hình VIP cho đường LAN
+
+Bước này tương tự bước 1, tuy nhiên cần cấu hình 2 Node pfSense chạy dải LAN trên cùng một VLAN trước đó.
+
+Ở bài này đã cấu hình sẵn 2 dải `VLAN40 - 10.10.40.x/24` cho HA-pfSense-01 và `VLAN41 - 10.10.41.x/24` cho HA-pfSense-01 nên không cấu hình được.
+
+### Bước 3: Kiểm tra trạng thái VIP
+
+- Thực hiện trên Node HA-pfSense-01:
+
+<img src="https://imgur.com/16ocScr.png">
+
+<img src="https://imgur.com/hckWjqw.png">
+
+- Trạng thái trên Node HA-pfSense-02 là `BACKUP`:
+
+<img src="https://imgur.com/XTQb6gE.png">
+
+## Phần 4. Cấu hình lại bảng NAT cho pfSense
+
+**Thực hiện trên Node HA-pfSense-01**
+
+### Bước 1: Thay đổi chế độ NAT
+
+<img src="https://imgur.com/lKfIL1F.png">
+
+<img src="https://imgur.com/KlT5DQ3.png">
+
+Chọn `Manual Outbound NAT rule generation (AON - Advanced Outbound NAT)` > Chọn `Save`
+
+<img src="https://imgur.com/Z1kIfHu.png">
+
+<img src="https://imgur.com/h777QhL.png">
+
+<img src="https://imgur.com/J8E4SC0.png">
+
+### Bước 2: Điều chỉnh Traffic sẽ đi qua IP VIP
+
+**Cấu hình lại traffic sẽ đi qua IP VIP WAN thay vì IP Public. Sẽ cấu hình trên các interface LAN**
+
+- Cấu hình rule `Auto created rule for ISAKMP - LAN to WAN` 
+
+    - Cấu hình lại `Translation` > `Address` thành VIP PUBLIC `172.16.2.30`
+
+<img src="https://imgur.com/BOxE6CB.png">
+
+<img src="https://imgur.com/9QdAABX.png">
+
+- Cấu hình rule `Auto created rule - LAN to WAN`
+
+    - Cấu hình lại `Translation` > `Address` thành VIP PUBLIC `172.16.2.30`
+
+<img src="https://imgur.com/tf9OgIL.png">
+
+- Kết quả:
+
+<img src="https://imgur.com/SaEeg9e.png">
+
+## Phần 5. Kiểm tra
+
+### Truy cập tới Pfsense thông qua VIP
+
+- Truy cập pfSense thông qua IP VIP http://172.16.2.30/
+
+<img src="https://imgur.com/rSgZZXS.png">
+
+- Thực hiện tắt Node 1 HA-pfSense-01 và vẫn truy cập qua IP VIP thành công
+
+<img src="https://imgur.com/fi8LrHS.png">
