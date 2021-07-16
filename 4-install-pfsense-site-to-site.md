@@ -194,7 +194,7 @@ Tại giao diện cấu hình Rule
 
 <img src="https://imgur.com/BqXeZAQ.png">
 
-#### Bước 3: Cấu hình Firewall cho VPN Site to Site tại interface IPsec
+### Bước 3: Cấu hình Firewall cho VPN Site to Site tại interface IPsec
 
 <img src="https://imgur.com/LscK7vy.png">
 
@@ -220,3 +220,180 @@ Chọn `Save`
 
 #### Bước 4: Bước Kiểm tra trạng thái VPN Site to Site IPsec
 
+Chọn `Status` > `IPsec`
+
+<img src="https://imgur.com/BD1QbYo.png">
+
+<img src="https://imgur.com/MQfWJb7.png">
+
+Vì chưa cấu hình đầu VPN Site to Site tại Cụm 2 nên trạng thái sẽ mãi tại `CONNECTING`
+
+## Phần 3. Cấu hình VPN IPSec tại Cụm 2
+
+**Thực hiện trên pfsense-site02 tại Cụm 2**
+
+### Bước 1: Thiết lập VPN Site to Site qua IPSec
+
+<img src="https://imgur.com/Efk2eUK.png">
+
+<img src="https://imgur.com/atj6PJg.png">
+
+Tại mục `General Information`
+
+- `Key Exchange version`: `IKEv1`
+
+- `Internet Protocol`: `IPv4`
+
+- `Interface`: `WAN`
+
+- `Remote Gateway`: `172.16.2.16` - Địa chỉ Public pfsense-site01
+
+- `Description`: `VPN to pfsense-site01`
+
+<img src="https://imgur.com/ZqX2PHL.png">
+
+Tại mục `Phase 1 Proposal (Authentication)`
+
+- `Authentication Method`: `Mutual PSK`
+
+- `Negotiation mode`: `Main`
+
+- `My identifier`: `My IP address`
+
+- `Peer identifier`: `Peer IP address`
+
+- Lưu ý: Giá trị `Pre-Shared Key` giữa VPN của 2 Cụm phải giống nhau (Copy key đã cấu hình ở Cụm 1)
+
+- `Pre-Shared Key` : `e53f9f71b0b1977ee8950c3db8b6daae8a8860012cb3ced420518d04`
+
+<img src="https://imgur.com/ykm5aHK.png">
+
+Tại mục `Phase 1 Proposal (Encryption Algorithm)`: Cấu hình `Encryption Algorithm`
+
+- `Algorithm` : `3DES`
+
+- `Hash`: `MD5`
+
+- `DH Group`: `14 (2048 bit)`
+
+Sau đó `Save`
+
+Chọn `Show Phase 2 Entries`
+
+<img src="https://imgur.com/g4ZgBCz.png">
+
+<img src="https://imgur.com/jbLLXYQ.png">
+
+Tại mục `General Information`
+
+- `Mode`: `Tunnel IPv4`
+
+- `Local Network`: Network - `10.10.41.0 / 24` - Dải địa chỉ VLAN41 tại Cụm 2
+
+- `NAT/BINAT translation`: `None`
+
+- `Remote Network`: Network - `10.10.40.0 / 24` - Dải địa chỉ VLAN40 tại Cụm 1
+
+- `Description`: `VLAN41 to VLAN40`
+
+<img src="https://imgur.com/QI88XtM.png">
+
+Tại mục `Phase 2 Proposal (SA/Key Exchange)`
+
+- `Encryption Algorithms`: `3DES`
+
+- `Hash Algorithms`: `MD5`
+
+- `PFS key group`: `14 (2048 bit)`
+
+Tại mục `Expiration and Replacement`
+
+- Lifetime: 3600
+
+Tại mục `Advanced Configuration`
+
+<img src="https://imgur.com/kFznlvD.png">
+
+<img src="https://imgur.com/twuSHp1.png">
+
+Kết quả:
+
+<img src="https://imgur.com/ujetNrF.png">
+
+### Bước 2: Cấu hình Firewall cho VPN Site to Site tại interface WAN
+
+Chọn `Firewall` > `Rules`
+
+<img src="https://imgur.com/SC2Ndcv.png">
+
+<img src="https://imgur.com/dKf7RgO.png">
+
+Tại mục `Edit Firewall Rule`
+
+- `Action`: `Pass`
+
+- `Interface`: `WAN`
+
+- `Address Family`: `IPv4`
+
+- `Protocol`: `TCP/UDP`
+
+Tại mục `Destination`: `Destination Port Range`
+
+- `From`: `IPsec NAT-T (4500)`
+
+- `To`: `IPsec NAT-T (4500)`
+
+Chọn `Save`
+
+<img src="https://imgur.com/hez1NV0.png">
+
+<img src="https://imgur.com/vwpI05k.png">
+
+Tạo thêm Rule
+
+Tại mục `Edit Firewall Rule`
+
+- `Action`: `Pass`
+
+- `Interface`: `WAN`
+
+- `Address Family`: `IPv4`
+
+- `Protocol`: `TCP/UDP`
+
+Tại mục `Destination`: `Destination Port Range`
+
+- `From`: `ISAKMP (500)`
+
+- `To`: `ISAKMP (500)`
+
+Chọn `Save`
+
+<img src="https://imgur.com/Uk6HuDq.png">
+
+<img src="https://imgur.com/0osRKPl.png">
+
+### Bước 3: Cấu hình Firewall cho VPN Site to Site tại interface IPsec
+
+Chọn `IPsec` > `Add`
+
+Tại mục `Edit Firewall Rule`
+
+- `Action`: `Pass`
+
+- `Interface`: `IPSec`
+
+- `Address Family`: `IPv4`
+
+- `Protocol`: `Any`
+
+Tại mục Source:
+
+- `Source` - Network - `10.10.40.0 / 24` - Cho phép dải VLAN40 kết nối qua VPN IPSec
+
+Chọn `Save`
+
+<img src="https://imgur.com/8iYGqO0.png">
+
+<img src="https://imgur.com/HU45YAF.png">
