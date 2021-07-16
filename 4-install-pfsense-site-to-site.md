@@ -60,7 +60,7 @@ Tại mục `General Information`:
 
 - `Description`: VPN to Site pfSense-site02
 
-<img src="https://imgur.com/lTAvLoy.png">
+<img src="https://imgur.com/z36vGdO.png">
 
 Tại mục `Phase 1 Proposal (Authentication)`
 
