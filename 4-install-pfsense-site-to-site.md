@@ -72,6 +72,8 @@ Tại mục `Phase 1 Proposal (Authentication)`
 
 - Click vào `Generate new Pres-Shared Key` để sinh giá trị `Pre-Shared Key`
 
+**LƯU Ý: Cần lưu lại `Pre-Shared Key` này để copy sang pfsense-site02 (2 Site cần phải có key giống nhau)
+
 <img src="https://imgur.com/NNxYtZb.png">
 
 Tại mục `Phase 1 Proposal (Encryption Algorithm)`
