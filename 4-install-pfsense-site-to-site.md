@@ -397,3 +397,13 @@ Chọn `Save`
 <img src="https://imgur.com/8iYGqO0.png">
 
 <img src="https://imgur.com/HU45YAF.png">
+
+## Phần 4. Kiểm tra kết nối giữa 2 Cụm
+
+- Cụm 1 pfsense-site01:
+
+<img src="https://imgur.com/Jm5FEOV.png">
+
+- Cụm 2 pfsense-site02:
+
+<img src="https://imgur.com/6vPoNNe.png">
