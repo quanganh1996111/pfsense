@@ -86,7 +86,7 @@ Tại mục `Phase 1 Proposal (Encryption Algorithm)`
 
 Sau đó tiến hành `Save` lại.
 
-<img src="https://imgur.com/qOArg8C.png">
+<img src="https://imgur.com/qxRqGCV.png">
 
 #### Chọn `Show Phase 2 Entries`
 
@@ -168,6 +168,36 @@ Tiếp tục `Add` thêm Rule:
 
 <img src="https://imgur.com/lxnpowN.png">
 
+Tại giao diện cấu hình Rule
+
+- Tại mục `Edit Firewall Rule`
+
+    - `Action`: `Pass`
+
+    - `Interface`: `WAN`
+    
+    - `Address Family`: `IPv4`
+
+    - `Protocol`: `TCP/UDP`
+
+- Tại mục `Destination`:
+
+    - `Destination Port Range`
+
+    - `From`: `ISAKMP (500)`
+
+    - `To`: `ISAKMP (500)`
+
+- Chọn `Save`
+
+<img src="https://imgur.com/Rdza1vL.png">
+
+<img src="https://imgur.com/BqXeZAQ.png">
+
+#### Bước 3: Cấu hình Firewall cho VPN Site to Site tại interface IPsec
+
+<img src="https://imgur.com/LscK7vy.png">
+
 Tại mục `Edit Firewall Rule`
 
 - `Action`: `Pass`
@@ -189,3 +219,4 @@ Chọn `Save`
 <img src="https://imgur.com/68svXjU.png">
 
 #### Bước 4: Bước Kiểm tra trạng thái VPN Site to Site IPsec
+
