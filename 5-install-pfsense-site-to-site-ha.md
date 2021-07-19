@@ -420,6 +420,8 @@ Chọn `Status > IPsec`
 
 ## Phần 5. Kiểm tra tính HA PFSENSE với VPN Site-to-Site
 
+### Trường hợp 1: Tắt một node bất kỳ
+
 - Tiến hành tắt node `pfsense-ha01-site01` trên Cụm 1:
 
 <img src="https://imgur.com/4gz1soR.png">
@@ -433,3 +435,25 @@ Kết quả ghi nhận pfSense vẫn kết nối 2 Site với nhau:
 <img src="https://imgur.com/A3rzQmq.png">
 
 <img src="https://imgur.com/r8aqzo3.png">
+
+- Tiến hành bật lại Node `pfsense-ha01-site01` trên Cụm 1:
+
+<img src="https://imgur.com/8NcE6kx.png">
+
+- Kết quả : 
+
+<img src="https://imgur.com/QQyflHa.png">
+
+<img src="https://imgur.com/GjVC6yQ.png">
+
+### Trường hợp 2: Ở mỗi cụm tiến hành tắt một Node
+
+- Tiến hành tắt Node `pfsense-ha01-site01` ở Cụm 1 và `pfsense-ha01-site02` ở Cụm 2:
+
+<img src="https://imgur.com/DeqTa1H.png">
+
+- Kết quả:
+
+<img src="https://imgur.com/lE26VY1.png">
+
+<img src="https://imgur.com/srCemzZ.png">
