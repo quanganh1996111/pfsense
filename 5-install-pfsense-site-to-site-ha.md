@@ -417,3 +417,19 @@ Chọn `Status > IPsec`
 - Tại Cụm 2:
 
 <img src="https://imgur.com/x1PvAZi.png">
+
+## Phần 5. Kiểm tra tính HA PFSENSE với VPN Site-to-Site
+
+- Tiến hành tắt node `pfsense-ha01-site01` trên Cụm 1:
+
+<img src="https://imgur.com/4gz1soR.png">
+
+<img src="https://imgur.com/Pf7zSwW.png">
+
+- Sẽ mất từ 1-5p để pfSense cập nhật và tính toán lại được đi.
+
+Kết quả ghi nhận pfSense vẫn kết nối 2 Site với nhau:
+
+<img src="https://imgur.com/A3rzQmq.png">
+
+<img src="https://imgur.com/r8aqzo3.png">
