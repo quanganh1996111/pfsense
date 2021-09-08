@@ -27,3 +27,5 @@ Cấu hình range IP có thể cấp DHCP. Ví dụ `10.10.40.50 - 10.10.40.99`
 Cấu hình DHCP cho card mạng của VM, Nhận IP `10.10.40.50`. Kiểm tra ping đến các IP thành công.
 
 ![](../images/Screenshot_11.png)
+
+## Thực hiện tương tự với các dải VLAN còn lại
