@@ -15,9 +15,10 @@ Muốn cấu hình VPN có thể kết nối được đến các dải VLAN kh�
 Trong phần `Advanced Configuration` -> `Custom options`, ta thêm cấu hình push route các dải VLAN:
 
 ```
-push "route 10.10.41.0 255.255.255.0"
-push "route 10.10.50.0 255.255.255.0"
+push "route 10.10.41.0 255.255.255.0";push "route 10.10.50.0 255.255.255.0"
 ```
+
+**Lưu ý:** Với mỗi cấu hình `push route` thì cách nhau bởi dấu chấm phẩy `;`
 
 Sau đó tiến hành `Save` lại:
 
